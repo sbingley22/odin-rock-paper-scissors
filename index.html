@@ -7,7 +7,71 @@
 </head>
 <body>
     <script>
-        console.log("Hello World");
+        console.log("Game Started");
+        
+        function getComputerChoice(){
+            rn = Math.floor(Math.random() * 3)
+            return convertToRPS(rn)
+        }
+
+        function convertToRPS(num){
+            rps = "rock"
+            if (num == 1){
+                rps = "paper"
+            }
+            else if (num == 2){
+                rps = "scissors"
+            }
+            return rps
+        }
+
+        function playRound(playerSelection, computerSelection){
+            result = ""
+            if (playerSelection === computerSelection){
+                result = "Draw"
+            }
+            else if (playerSelection === "rock"){
+                if (computerSelection === "scissors") result = "You win! Rock beats scissors."
+                else result = "You lose! Paper beats rock."
+            }
+            else if (playerSelection === "paper"){
+                if (computerSelection === "scissors") result = "You lose! Scissors beats paper."
+                else result = "You win! Paper beats rock."
+            }
+            else if (playerSelection === "scissors"){
+                if (computerSelection === "rock") result = "You lose! Rock beats scissors."
+                else result = "You win! Paper beats rock."
+            }
+            return result
+        }
+
+        function getPlayerChoice() {
+            playerSelection = prompt("Pick rock paper or scissors").toLowerCase()
+            valid = isPlayerChoiceValid(playerSelection)
+            while (valid == false){
+                console.log("invalid selection")
+                playerSelection = prompt("Pick rock paper or scissors").toLowerCase()
+                valid = isPlayerChoiceValid(playerSelection)
+            }
+            return playerSelection
+        }
+
+        function isPlayerChoiceValid(pc){
+            if (pc == "rock" || pc == "paper" || pc == "scissors" ) return true
+            else return false
+        }
+
+        function game(){
+            for(i=0; i<5; i++){
+                playerSelection = getPlayerChoice()
+                computerSelection = getComputerChoice()
+                result = playRound(playerSelection, computerSelection)
+                console.log(`Round ${i+1}: ${result}`)
+            }
+        }
+
+        game()
+
     </script>
 </body>
 </html>
