@@ -43,15 +43,32 @@
                 if (computerSelection === "rock") result = "You lose! Rock beats scissors."
                 else result = "You win! Paper beats rock."
             }
-            console.log(`${result}`)
             return result
         }
 
         function chosenWeapon(e){
-            console.log(e)
             computerSelection = getComputerChoice()
             playerSelection = e.target.innerText.toLowerCase()
-            playRound(playerSelection, computerSelection)
+            result = playRound(playerSelection, computerSelection)
+            updateScore(result)
+        }
+
+        function updateScore(result) {
+            if (result.includes("win")) playerScore += 1
+            else if (result.includes("lose")) computerScore += 1
+            score = `|| Player: ${playerScore}  Computer: ${computerScore} || `
+            gameOver = ""
+            if (playerScore > 4){
+                playerScore = 0
+                computerScore = 0
+                gameOver = "You were the first to 5 points! Well done!!!"
+            }
+            else if (computerScore > 4){
+                playerScore = 0
+                computerScore = 0
+                gameOver = "The computer beat you to 5 points. Oh well, it's not the end of the world is it?"
+            }
+            results.textContent = result + score + gameOver
         }
 
         mainContainer = document.getElementById("main-container")
@@ -74,6 +91,9 @@
         results = document.createElement("div")
         results.textContent = "Choose your weapon."
         mainContainer.appendChild(results)
+
+        playerScore = 0;
+        computerScore = 0;
 
     </script>
 </body>
