@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        console.log("Game Started");
-        
+    <div id="main-container">
+
+    </div>
+    <script>        
         function getComputerChoice(){
             rn = Math.floor(Math.random() * 3)
             return convertToRPS(rn)
@@ -42,35 +43,37 @@
                 if (computerSelection === "rock") result = "You lose! Rock beats scissors."
                 else result = "You win! Paper beats rock."
             }
+            console.log(`${result}`)
             return result
         }
 
-        function getPlayerChoice() {
-            playerSelection = prompt("Pick rock paper or scissors").toLowerCase()
-            valid = isPlayerChoiceValid(playerSelection)
-            while (valid == false){
-                console.log("invalid selection")
-                playerSelection = prompt("Pick rock paper or scissors").toLowerCase()
-                valid = isPlayerChoiceValid(playerSelection)
-            }
-            return playerSelection
+        function chosenWeapon(e){
+            console.log(e)
+            computerSelection = getComputerChoice()
+            playerSelection = e.target.innerText.toLowerCase()
+            playRound(playerSelection, computerSelection)
         }
 
-        function isPlayerChoiceValid(pc){
-            if (pc == "rock" || pc == "paper" || pc == "scissors" ) return true
-            else return false
-        }
+        mainContainer = document.getElementById("main-container")
 
-        function game(){
-            for(i=0; i<5; i++){
-                playerSelection = getPlayerChoice()
-                computerSelection = getComputerChoice()
-                result = playRound(playerSelection, computerSelection)
-                console.log(`Round ${i+1}: ${result}`)
-            }
-        }
+        btnR = document.createElement("button")
+        btnR.textContent = "Rock"
+        btnR.addEventListener("click", chosenWeapon)
+        mainContainer.appendChild(btnR)
 
-        game()
+        btnP = document.createElement("button")
+        btnP.textContent = "Paper"
+        btnP.addEventListener("click", chosenWeapon)
+        mainContainer.appendChild(btnP)
+
+        btnS = document.createElement("button")
+        btnS.textContent = "Scissors"
+        btnS.addEventListener("click", chosenWeapon)
+        mainContainer.appendChild(btnS)
+
+        results = document.createElement("div")
+        results.textContent = "Choose your weapon."
+        mainContainer.appendChild(results)
 
     </script>
 </body>
